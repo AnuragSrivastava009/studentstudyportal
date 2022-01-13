@@ -13,13 +13,17 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from socket import fromfd
+from xml.dom.minidom import Document
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
 from dashboard import views as dash_views
 from django.contrib.auth import views as auth_views
+from django.conf.urls.static import static
 from django.views.static import serve
 from django.conf.urls import url
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('dashboard.urls')),
@@ -30,4 +34,4 @@ urlpatterns = [
     url(r'^media/(?P<path>.*)$', serve,{'document_root':       settings.MEDIA_ROOT}), 
     url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
 ]
- 
+urlpatterns=urlpatterns+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
